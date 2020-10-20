@@ -1,0 +1,337 @@
+          {
+              "api_paramNorm": 5,
+              "nombre_fuente": "nomalizacion csv",
+              "fecha_inicio": "201301",
+              "fecha_fin": "202005",
+              "periodo_salida": 3,
+              "prom_periodo": 3,
+              "vector_promedio": -1,
+              "semanas": 52,
+              "meses": 12,
+
+
+              "columnas": [
+
+                {
+                      "nombre_columna": "periodo",
+                      "tipo_columna": 3,
+                      "mapeo": "periodo",
+                      "tipo": 1,
+                      "filtros":
+                      [
+
+                      ]
+                  },
+                {
+                      "nombre_columna": "semanas",
+                  "tipo_columna": 2,
+                  "mapeo": "semanas",
+                      "tipo": 1,
+                      "filtros":
+                      [
+
+                      ]
+                  },
+                {
+                    "nombre_columna": "normalizacion_id",
+                    "mapeo": "normalizacion_id",
+                  "tipo_columna": 1,
+                  "tipo": 1,
+                    "filtros":
+                        [
+
+                        ]
+                },
+
+              ],
+
+              "semanas_esp": [
+                  {"periodo" : "201001", "semanas" :3}
+
+,{"periodo" : "201002", "semanas" :4}
+
+,{"periodo" : "201003", "semanas" :5}
+
+,{"periodo" : "201004", "semanas" :4}
+
+,{"periodo" : "201005", "semanas" :4}
+
+,{"periodo" : "201006", "semanas" :5}
+
+,{"periodo" : "201007", "semanas" :4}
+
+,{"periodo" : "201008", "semanas" :4}
+
+,{"periodo" : "201009", "semanas" :5}
+
+,{"periodo" : "201010", "semanas" :4}
+
+,{"periodo" : "201011", "semanas" :4}
+
+,{"periodo" : "201012", "semanas" :6}
+
+,{"periodo" : "201101", "semanas" :3}
+
+,{"periodo" : "201102", "semanas" :4}
+
+,{"periodo" : "201103", "semanas" :5}
+
+,{"periodo" : "201104", "semanas" :4}
+
+,{"periodo" : "201105", "semanas" :4}
+
+,{"periodo" : "201106", "semanas" :5}
+
+,{"periodo" : "201107", "semanas" :4}
+
+,{"periodo" : "201108", "semanas" :4}
+
+,{"periodo" : "201109", "semanas" :5}
+
+,{"periodo" : "201110", "semanas" :4}
+
+,{"periodo" : "201111", "semanas" :4}
+
+,{"periodo" : "201112", "semanas" :6}
+
+,{"periodo" : "201201", "semanas" :4}
+
+,{"periodo" : "201202", "semanas" :4}
+
+,{"periodo" : "201203", "semanas" :4}
+
+,{"periodo" : "201204", "semanas" :5}
+
+,{"periodo" : "201205", "semanas" :4}
+
+,{"periodo" : "201206", "semanas" :4}
+
+,{"periodo" : "201207", "semanas" :5}
+
+,{"periodo" : "201208", "semanas" :4}
+
+,{"periodo" : "201209", "semanas" :5}
+
+,{"periodo" : "201210", "semanas" :4}
+
+,{"periodo" : "201211", "semanas" :4}
+
+,{"periodo" : "201212", "semanas" :5}
+
+,{"periodo" : "201301", "semanas" :3}
+
+,{"periodo" : "201302", "semanas" :4}
+
+,{"periodo" : "201303", "semanas" :5}
+
+,{"periodo" : "201304", "semanas" :4}
+
+,{"periodo" : "201305", "semanas" :4}
+
+,{"periodo" : "201306", "semanas" :5}
+
+,{"periodo" : "201307", "semanas" :4}
+
+,{"periodo" : "201308", "semanas" :4}
+
+,{"periodo" : "201309", "semanas" :5}
+
+,{"periodo" : "201310", "semanas" :4}
+
+,{"periodo" : "201311", "semanas" :4}
+
+,{"periodo" : "201312", "semanas" :6}
+
+,{"periodo" : "201401", "semanas" :3}
+
+,{"periodo" : "201402", "semanas" :4}
+
+,{"periodo" : "201403", "semanas" :5}
+
+,{"periodo" : "201404", "semanas" :4}
+
+,{"periodo" : "201405", "semanas" :4}
+
+,{"periodo" : "201406", "semanas" :5}
+
+,{"periodo" : "201407", "semanas" :4}
+
+,{"periodo" : "201408", "semanas" :4}
+
+,{"periodo" : "201409", "semanas" :5}
+
+,{"periodo" : "201410", "semanas" :4}
+
+,{"periodo" : "201411", "semanas" :4}
+
+,{"periodo" : "201412", "semanas" :6}
+
+,{"periodo" : "201501", "semanas" :3}
+
+,{"periodo" : "201502", "semanas" :4}
+
+,{"periodo" : "201503", "semanas" :5}
+
+,{"periodo" : "201504", "semanas" :4}
+
+,{"periodo" : "201505", "semanas" :4}
+
+,{"periodo" : "201506", "semanas" :5}
+
+,{"periodo" : "201507", "semanas" :4}
+
+,{"periodo" : "201508", "semanas" :4}
+
+,{"periodo" : "201509", "semanas" :5}
+
+,{"periodo" : "201510", "semanas" :4}
+
+,{"periodo" : "201511", "semanas" :4}
+
+,{"periodo" : "201512", "semanas" :6}
+
+,{"periodo" : "201601", "semanas" :3}
+
+,{"periodo" : "201602", "semanas" :4}
+
+,{"periodo" : "201603", "semanas" :5}
+
+,{"periodo" : "201604", "semanas" :4}
+
+,{"periodo" : "201605", "semanas" :4}
+
+,{"periodo" : "201606", "semanas" :5}
+
+,{"periodo" : "201607", "semanas" :4}
+
+,{"periodo" : "201608", "semanas" :4}
+
+,{"periodo" : "201609", "semanas" :5}
+
+,{"periodo" : "201610", "semanas" :4}
+
+,{"periodo" : "201611", "semanas" :5}
+
+,{"periodo" : "201612", "semanas" :5}
+
+,{"periodo" : "201701", "semanas" :4}
+
+,{"periodo" : "201702", "semanas" :4}
+
+,{"periodo" : "201703", "semanas" :4}
+
+,{"periodo" : "201704", "semanas" :4}
+
+,{"periodo" : "201705", "semanas" :4}
+
+,{"periodo" : "201706", "semanas" :5}
+
+,{"periodo" : "201707", "semanas" :4}
+
+,{"periodo" : "201708", "semanas" :4}
+
+,{"periodo" : "201709", "semanas" :5}
+
+,{"periodo" : "201710", "semanas" :4}
+
+,{"periodo" : "201711", "semanas" :5}
+
+,{"periodo" : "201712", "semanas" :5}
+
+,{"periodo" : "201801", "semanas" :4}
+
+,{"periodo" : "201802", "semanas" :4}
+
+,{"periodo" : "201803", "semanas" :5}
+
+,              {"periodo" : "201804", "semanas" :4}
+
+,              {"periodo" : "201805", "semanas" :4}
+
+,              {"periodo" : "201806", "semanas" :5}
+
+,              {"periodo" : "201807", "semanas" :4}
+
+,              {"periodo" : "201808", "semanas" :4}
+
+,              {"periodo" : "201809", "semanas" :5}
+
+,              {"periodo" : "201810", "semanas" :4}
+
+,              {"periodo" : "201811", "semanas" :4}
+
+,              {"periodo" : "201812", "semanas" :5}
+
+,              {"periodo" : "201901", "semanas" :4}
+
+,              {"periodo" : "201902", "semanas" :4}
+
+,              {"periodo" : "201903", "semanas" :5}
+
+,              {"periodo" : "201904", "semanas" :4}
+
+,              {"periodo" : "201905", "semanas" :4}
+
+,              {"periodo" : "201906", "semanas" :5}
+
+,              {"periodo" : "201907", "semanas" :4}
+
+,              {"periodo" : "201908", "semanas" :4}
+
+,              {"periodo" : "201909", "semanas" :5}
+
+,              {"periodo" : "201910", "semanas" :4}
+
+,              {"periodo" : "201911", "semanas" :4}
+
+,              {"periodo" : "201912", "semanas" :5}
+
+,              {"periodo" : "202001", "semanas" :4}
+
+,              {"periodo" : "202002", "semanas" :4}
+
+,              {"periodo" : "202003", "semanas" :5}
+
+,              {"periodo" : "202004", "semanas" :4}
+
+,              {"periodo" : "202005", "semanas" :4}
+
+,              {"periodo" : "202006", "semanas" :5}
+
+,              {"periodo" : "202007", "semanas" :4}
+
+,              {"periodo" : "202008", "semanas" :4}
+
+,              {"periodo" : "202009", "semanas" :5}
+
+,              {"periodo" : "202010", "semanas" :4}
+
+,              {"periodo" : "202011", "semanas" :4}
+
+,              {"periodo" : "202012", "semanas" :5}
+
+,              {"periodo" : "202101", "semanas" :4}
+
+,              {"periodo" : "202102", "semanas" :4}
+
+,              {"periodo" : "202103", "semanas" :5}
+
+,              {"periodo" : "202104", "semanas" :4}
+
+,              {"periodo" : "202105", "semanas" :4}
+
+,              {"periodo" : "202106", "semanas" :5}
+
+,              {"periodo" : "202107", "semanas" :4}
+
+,              {"periodo" : "202108", "semanas" :4}
+
+,              {"periodo" : "202109", "semanas" :5}
+
+,              {"periodo" : "202110", "semanas" :4}
+
+,              {"periodo" : "202111", "semanas" :4}
+
+,              {"periodo" : "202112", "semanas" :5}
+              ]
+          }

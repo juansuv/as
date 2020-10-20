@@ -1,0 +1,19 @@
+# Created by .ignore support plugin (hsz.mobi)
+venv/
+__pycache__/
+
+*.local.py
+local.py
+
+app/app/environments/local.py
+
+app/media/
+app/normaliza/migrations/
+
+*.csv
+*.so
+*.log
+
+db.sqlite3
+.idea
+app/normaliza/data/
