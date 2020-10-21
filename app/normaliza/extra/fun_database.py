@@ -58,7 +58,8 @@ def cargue_oracle(datos, query, num_register, params=None, unique_id="", user_id
                            ((prom_periodo) * (vector_promedio)) AS datamult
                            from normaliza_normalizacion''',
         'COLUMNAS': ['nombre_fuente', 'fecha_inicio', 'datamult'],
-
+        'num_process': 2,
+        'num_chunck': 500000,
     }
     db_info.update(datos)
 
@@ -94,6 +95,8 @@ def guardar_oracle(datos, query, num_register, unique_id, params=None):
                            ((prom_periodo) * (vector_promedio)) AS datamult
                            from normaliza_normalizacion''',
         'COLUMNAS': ['nombre_fuente', 'fecha_inicio', 'datamult'],
+        'num_process': 2,
+        'num_chunck': 500000,
 
     }
     db_info.update(datos)
@@ -124,6 +127,8 @@ def ejecutar_oracle(datos, query, params=None):
                            ((prom_periodo) * (vector_promedio)) AS datamult
                            from normaliza_normalizacion''',
         'COLUMNAS': ['nombre_fuente', 'fecha_inicio', 'datamult'],
+        'num_process': 2,
+        'num_chunck': 500000,
 
     }
     db_info.update(datos)
@@ -149,6 +154,8 @@ def cargue_sqlserver(datos, query, num_register, params=None):
                        ((prom_periodo) * (vector_promedio)) AS datamult
                        from normaliza_normalizacion''',
         'COLUMNAS': ['nombre_fuente', 'fecha_inicio', 'datamult'],
+        'num_process': 2,
+        'num_chunck':500000,
 
     }
     db_info.update(datos)
@@ -171,6 +178,8 @@ def guardar_sqlserver(datos, query, num_register, unique_id, params=None):
                        ((prom_periodo) * (vector_promedio)) AS datamult
                        from normaliza_normalizacion''',
         'COLUMNAS': ['nombre_fuente', 'fecha_inicio', 'datamult'],
+        'num_process': 2,
+        'num_chunck': 500000,
 
     }
     db_info.update(datos)
@@ -194,6 +203,8 @@ def ejecutar_sqlserver(datos, query, params=None):
                        ((prom_periodo) * (vector_promedio)) AS datamult
                        from normaliza_normalizacion''',
         'COLUMNAS': ['nombre_fuente', 'fecha_inicio', 'datamult'],
+        'num_process': 2,
+        'num_chunck': 500000,
 
     }
     db_info.update(datos)

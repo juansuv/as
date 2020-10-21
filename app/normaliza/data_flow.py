@@ -54,6 +54,9 @@ class DataFlow:
                 'usuario': param.usuario,
                 'password': param.password,
             }
+
+        self.db_info['num_process']=data['num_process']
+        self.db_info['num_chunck']=data['num_chunck']
         col = []
         columns = data['columnas'].copy()
         data['ruta'] = self.db_info['ruta']
@@ -338,21 +341,28 @@ class DataFlow:
 
         return data
 
-    def save_database(self, data):
+    def save_database(self, data,columns_primarias, agrupaciones, df_data):
 
+
+        df_data = df_data[columns_primarias + agrupaciones]
+        nombre_archivo = str(data['ruta'])
+
+        df_data = pd.melt(df_data, id_vars=columns_primarias, var_name=data['tiempo'],
+                          value_name=data['valor'])
+
+        df_data.to_excel("Qeudaconceros.xlsx")
+        df_data=df_data[df_data[data['valor']]!=0]
         table_name = self.nombre_destino
-        # self.df_data.reset_index()
-        self.df_data['ID'] = data['unique_id']
-
-        a = self.df_data.columns
+        # df_data.reset_index()
+        df_data['ID'] = data['unique_id']
+        a = df_data.columns
         cols_and_types = ''
         only_cols = ''
         number_cols = ''
         i = 1
 
-        len_data = len(self.df_data[a[0]])
+        len_data = len(df_data[a[0]])
         for column in a:
-
             if column == 'id':
                 cols_and_types += f"index INT PRIMARY KEY NOT NULL, "
             else:
@@ -367,8 +377,21 @@ class DataFlow:
         b = f'CREATE TABLE {table_name} ({cols_and_types});'
         #
 
+        informe = {
+            'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'Api_Catalogo': data['api_paramNorm'],
 
+            'desc_informe_usuario': 'El Query para la Consulta en la Base de datos con la información del cliente va  insertar.'+str(len(df_data['ID'])),
+            'tipo_informe': 'CONTROLADO',
+            'nivel_informe': 'INFORME',
+            'proceso': 'Obtencion numero registros |Guardar en base de datos' + str(len(df_data['ID'])) ,
+            'archivo_log': 'NO'
 
+        }
+
+        self.LOG.append_exec(informe)
+
+        print(informe)
 
         if self.tipo_fuente == 1:
             '''try:
@@ -391,8 +414,9 @@ class DataFlow:
                 self.LOG.append_exec(error)
                 raise ()
             '''
+
             try:
-                guardar_sqlserver(self.db_info, self.df_data, len_data, table_name)
+                guardar_sqlserver(self.db_info, df_data, len_data, table_name)
 
             except:
                 error = {
@@ -413,7 +437,7 @@ class DataFlow:
 
         elif self.tipo_fuente == 2:
             try:
-                guardar_oracle(self.db_info, self.df_data, len_data, table_name)
+                guardar_oracle(self.db_info, df_data, len_data, table_name)
 
             except:
                 error = {
@@ -434,8 +458,8 @@ class DataFlow:
 
         # a = f"insert into {table_name} ({only_cols}) values ({number_cols})"
 
-        # guardar_sqlserver({},self.df_data,len_data,data['unique_id'])
-        # guardar_oracle({},self.df_data,len_data,self.data['unique_id'])
+        # guardar_sqlserver({},df_data,len_data,data['unique_id'])
+        # guardar_oracle({},df_data,len_data,self.data['unique_id'])
 
     def save_file(self, data, columns_primarias, agrupaciones, df_data):
 
@@ -445,6 +469,22 @@ class DataFlow:
         df_data = pd.melt(df_data, id_vars=columns_primarias, var_name=data['tiempo'],
                           value_name=data['valor'])
         df_data['ID'] = data['unique_id']
+
+        informe = {
+            'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'Api_Catalogo': data['api_paramNorm'],
+
+            'desc_informe_usuario': 'El Query para la Consulta en la Base de datos con la información del cliente va  insertar.' + str(
+                len(df_data['ID'])),
+            'tipo_informe': 'CONTROLADO',
+            'nivel_informe': 'INFORME',
+            'proceso': 'Obtencion numero registros |Guardar en base de datos' + str(len(df_data['ID'])),
+            'archivo_log': 'NO'
+
+        }
+
+        self.LOG.append_exec(informe)
+
         if '.xlsx' in str(nombre_archivo):
 
             #
@@ -528,7 +568,7 @@ class DataFlow:
 
         if self.tipo_fuente == 1 or self.tipo_fuente == 2:
 
-            self.save_database(data=data_new)
+            self.save_database(data=data_new, columns_primarias=colum_primary, agrupaciones=agrupaciones,df_data=normalize_df)
         elif self.tipo_fuente == 3 or self.tipo_fuente == 4:
 
             self.save_file(data=data_new, columns_primarias=colum_primary, agrupaciones=agrupaciones,

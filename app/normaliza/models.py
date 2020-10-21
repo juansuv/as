@@ -146,6 +146,8 @@ class Normalizacion(models.Model):
     #mirar si se asosia a una columna id de las que se agregaron
     #valor = models.CharField(verbose_name="Columna valor ", max_length=36)
     #tiempo = models.CharField(verbose_name="Columna de tiempo ", max_length=36)
+    num_process = models.PositiveIntegerField(verbose_name='Numero de procesos  a ejecutar', default=2)
+    num_chunck = models.PositiveIntegerField(verbose_name='Tamaño de datos a ejecutar', default=500000)
 
     def __str__(self):
         return self.nombre_fuente
