@@ -136,8 +136,18 @@ def ejecutar_oracle(datos, query, params=None):
     dsn_tns = cx_Oracle.makedsn(db_info['server'], db_info['port'], service_name=db_info['sid'])
     ora_conn = cx_Oracle.connect(user=db_info['usuario'], password=db_info['password'], dsn=dsn_tns)
     cur = ora_conn.cursor()
+
     cur.execute(query)
-    res = cur.fetchall()
+
+
+    res = 0
+    try:
+        res = cur.fetchall()
+
+    except:
+        pass
+    ora_conn.close()
+    return res
 
     ora_conn.close()
     return res
@@ -162,7 +172,7 @@ def cargue_sqlserver(datos, query, num_register, params=None):
     sqlparallel = SqlParallel()
     result = sqlparallel.get_data_sql(db_info, query=query, expected_data=num_register)
     # df = pd.read_sql(query, conn, params=params)
-    print("reuslt,",result)
+
 
     return result
 
@@ -208,33 +218,33 @@ def ejecutar_sqlserver(datos, query, params=None):
 
     }
     db_info.update(datos)
-    print("datos con los que se conecta sql server",db_info)
+
 
     '''quoted = urllib.parse.quote_plus(
         'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + db_info['server'] + ';DATABASE=' + db_info['sid'] + '; UID = ' +
         db_info['usuario'] + '; PWD = ' + db_info['password'] + ';Trusted_Connection=no;')
 
-    print("quute", quoted)
+    
     engine = create_engine('mssql+pyodbc:///?odbc_connect={}'.format(quoted))
     con = engine.connect()
     result = con.execute(query)
     for row in result:
-        print(row)
+        
     '''
 
     string_connect2=('DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + db_info['server'] + ';DATABASE=' + db_info['sid'] + ';UID=' + db_info['usuario'] + ';PWD=' + db_info['password'])
-    print("conecta con los datos",string_connect2)
+
     conn = pyodbc.connect(string_connect2)
     # conn2 = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Userstr\suarez\Desktop\testdb.accdb;')
     cur = conn.cursor()
-    print(query)
+
     cur.execute(query)
 
 
     res=0
     try:
         res=cur.fetchall()
-        print()
+
     except:
         pass
     conn.close()

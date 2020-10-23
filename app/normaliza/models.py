@@ -82,9 +82,9 @@ class ParametrosBD(models.Model):
         path = f"media/{instance.user.id}/input/"
         fs = FileSystemStorage(location=path)
         if fs.exists(filename):
-            print('Elimino algo')
+
             fs.delete(filename)
-        print('Creo un archivo')
+
         return 'media/{0}/input/{1}'.format(instance.user.id, filename)
 
 
@@ -168,9 +168,9 @@ class Normalizacion(models.Model):
         datos['api_catalogo'] = self.get_api_catalogo()
 
         parambds = self.get_parambd()
-        print("paramnbds obtain", parambds)
+
         for parambd in parambds:
-            print("entra!! parambd", parambds)
+
             datos['protocolo'] = parambd.protocolo
             datos['host'] = parambd.host
             datos['puerto'] = parambd.puerto
@@ -179,7 +179,7 @@ class Normalizacion(models.Model):
             datos['usuario'] = parambd.usuario
             datos['password'] = parambd.password
 
-        print("datospara_norm", datos)
+
         return datos
 
     def get_columnas(self):

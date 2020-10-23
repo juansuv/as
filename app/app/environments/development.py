@@ -6,11 +6,11 @@ _BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 
 DEBUG = True
 
-#SITE_URL = 'http://dev859.tecnoquimicas.com'
-SITE_URL = 'localhost'
+SITE_URL = 'http://dev859.tecnoquimicas.com'
+#SITE_URL = 'localhost'
 
-#ALLOWED_HOSTS = ['172.22.12.155', 'dev859.tecnoquimicas.com']
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['172.22.12.155', 'dev859.tecnoquimicas.com']
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 SECURE_SSL_REDIRECT = True
 
 DATABASES = {

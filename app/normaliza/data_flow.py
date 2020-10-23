@@ -25,6 +25,7 @@ class DataFlow:
     num_register = 0
     tipo_fuente = ''
     nombre_destino = ''
+    fuente=''
 
     def __init__(self):
         df_data = pd.DataFrame()
@@ -42,9 +43,9 @@ class DataFlow:
         fuente = data['api_paramNorm'].Fuente
         self.nombre_tabla = data['api_paramNorm'].nombre_fuente
         self.nombre_destino = data['api_paramNorm'].nombre_destino
-        print(data['api_paramNorm'].parametrosbd)
+
         parambd2 = data['api_paramNorm'].parametrosbd.all()
-        print(parambd2)
+
         for param in parambd2:
             self.db_info = {
                 'server': param.host,
@@ -77,19 +78,19 @@ class DataFlow:
 
         load_data_struc = LoadFile(col, ren, dtype)
         self.tipo_fuente = fuente.nombre
+
         if fuente.nombre == 1:
             # SQL SERVER
-
+            self.fuentes=self.nombre_tabla
             # se obtiene query
 
             final_query = apifil.get_filter_query(columns, self.nombre_tabla, fuente.nombre) + ''
             where_query = final_query.split('FROM')[1]
-            print("query",final_query)
+
             where_query_f = f"SELECT COUNT(*) FROM" + where_query
 
             try:
                 self.num_register = ejecutar_sqlserver(self.db_info, where_query_f, params=None)
-                print("numregister",self.num_register)
             except:
                 error = {
                     'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -147,17 +148,16 @@ class DataFlow:
         elif fuente.nombre == 2:
             # ORACLE
             # query
-
+            self.fuentes = self.nombre_tabla
             final_query = apifil.get_filter_query(columns, self.nombre_tabla, fuente.nombre) + ';'
 
             where_query = final_query.split('FROM')[1]
             #
             where_query_f = f"SELECT COUNT(*) FROM" + where_query
             #
+
             try:
-
                 self.num_register = ejecutar_oracle(self.db_info, where_query_f[:-1], params=None)
-
             except:
                 error = {
                     'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -192,7 +192,7 @@ class DataFlow:
                 raise Exception('Error el filtro aplicado no obtiene registros entre los datos')
 
             try:
-                list_data = cargue_oracle(self.db_info, final_query[:-1], self.num_register[0][0], params=None,
+                self.df_data = cargue_oracle(self.db_info, final_query[:-1], self.num_register[0][0], params=None,
                                           unique_id=unique_id, user_id=user_id)
             except:
                 error = {
@@ -211,17 +211,13 @@ class DataFlow:
                 self.LOG.append_clean(error)
                 raise Exception("No se ejecuto la consulta para ORACLE")
             # self.df_data=self.obtain_file(user_id,load_data_struc)
-            list_data
-
-            self.df_data = pd.concat(list_data, ignore_index=True, axis=0)
-            self.df_data = self.df_data[col]
-            self.df_data.reset_index()
+            self.df_data.reset_index(inplace=True)
 
             data['valor'], data['tiempo'] = validate_data(self.df_data, data, self.LOG, col)
 
         elif fuente.nombre == 3:
             # XLSX
-
+            self.fuentes =  self.db_info['ruta']
             data['ruta'] = self.db_info['ruta']
             try:
                 self.df_data = cargue_xlsx(self.db_info['ruta'], load_data_struc)
@@ -250,7 +246,7 @@ class DataFlow:
 
         elif fuente.nombre == 4:
             '''cargue con csv'''
-
+            self.fuentes = self.db_info['ruta']
             data['ruta'] = self.db_info['ruta']
 
             try:
@@ -298,6 +294,22 @@ class DataFlow:
 
                 self.LOG.append_clean(error)
                 raise ()
+
+        informe = {
+            'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'Api_Catalogo': data['api_paramNorm'],
+
+            'desc_informe_usuario': 'El Query para la obtecion de datos con la información del cliente obtuvo el siguiente numero de  registros: .'
+                                    + str(len(self.df_data.axes[0])) + 'registros de la fuente'+self.fuente,
+            'tipo_informe': 'CONTROLADO',
+            'nivel_informe': 'INFORME',
+            'proceso': 'Obtencion numero registros | Carga desde base de datos el siguiente numero de  registros: ' + str(len(self.df_data.axes[0])),
+            'archivo_log': 'NO'
+
+        }
+
+        self.LOG.append_exec(informe)
+
 
         return data
 
@@ -350,7 +362,7 @@ class DataFlow:
         df_data = pd.melt(df_data, id_vars=columns_primarias, var_name=data['tiempo'],
                           value_name=data['valor'])
 
-        df_data.to_excel("Qeudaconceros.xlsx")
+
         df_data=df_data[df_data[data['valor']]!=0]
         table_name = self.nombre_destino
         # df_data.reset_index()
@@ -371,11 +383,9 @@ class DataFlow:
             number_cols += f":{i}, "
             i = 1 + i
         cols_and_types = cols_and_types[:len(cols_and_types) - 2]
-
         only_cols = only_cols[:len(only_cols) - 2]
         number_cols = number_cols[:len(number_cols) - 2]
         b = f'CREATE TABLE {table_name} ({cols_and_types});'
-        #
 
         informe = {
             'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -384,19 +394,19 @@ class DataFlow:
             'desc_informe_usuario': 'El Query para la Consulta en la Base de datos con la información del cliente va  insertar.'+str(len(df_data['ID'])),
             'tipo_informe': 'CONTROLADO',
             'nivel_informe': 'INFORME',
-            'proceso': 'Obtencion numero registros |Guardar en base de datos' + str(len(df_data['ID'])) ,
+            'proceso': 'Obtencion numero registros |Guardar en base de datos' + str(len(df_data['ID'])),
             'archivo_log': 'NO'
 
         }
 
         self.LOG.append_exec(informe)
 
-        print(informe)
+
 
         if self.tipo_fuente == 1:
             '''try:
                 self.table = ejecutar_sqlserver(self.db_info, b, params=None)
-                print("numregister", self.table)
+
             except:
                 error = {
                     'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -456,6 +466,8 @@ class DataFlow:
                 self.LOG.append_exec(error)
                 raise ()
 
+
+        del df_data
         # a = f"insert into {table_name} ({only_cols}) values ({number_cols})"
 
         # guardar_sqlserver({},df_data,len_data,data['unique_id'])
@@ -474,11 +486,11 @@ class DataFlow:
             'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             'Api_Catalogo': data['api_paramNorm'],
 
-            'desc_informe_usuario': 'El Query para la Consulta en la Base de datos con la información del cliente va  insertar.' + str(
+            'desc_informe_usuario': 'El Query para la Consulta en la Base de datos con la información del cliente va  insertar los siguientes registros:  ' + str(
                 len(df_data['ID'])),
             'tipo_informe': 'CONTROLADO',
             'nivel_informe': 'INFORME',
-            'proceso': 'Obtencion numero registros |Guardar en base de datos' + str(len(df_data['ID'])),
+            'proceso': 'Obtencion numero registros |Guardar en base de datos los siguientes registros ' + str(len(df_data['ID'])),
             'archivo_log': 'NO'
 
         }
@@ -542,8 +554,23 @@ class DataFlow:
         """
 
         self.LOG = logs_normalizacion.get_interactive_log(user_id=str(user.id))
+        informe = {
+            'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'Api_Catalogo': data['api_paramNorm'],
+
+            'desc_informe_usuario': 'Iniciando proceso de normalizacion.',
+
+            'tipo_informe': 'CONTROLADO',
+            'nivel_informe': 'INFORME',
+            'proceso': 'Iniciando proceso de normalizacion',
+            'archivo_log': 'NO'
+
+        }
+
+        self.LOG.append_exec(informe)
+
+
         data['unique_id'] = str(uuid.uuid1())
-        print("data",data)
         data_new = self.datasource_conection(data, user.id)
 
         try:
@@ -574,4 +601,20 @@ class DataFlow:
             self.save_file(data=data_new, columns_primarias=colum_primary, agrupaciones=agrupaciones,
                            df_data=normalize_df)
 
+        del self.df_data
+
+        informe = {
+            'fecha': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'Api_Catalogo': data['api_paramNorm'],
+
+            'desc_informe_usuario': 'Finaliza proceso de normalizacion.',
+
+            'tipo_informe': 'CONTROLADO',
+            'nivel_informe': 'INFORME',
+            'proceso': 'Finaliza proceso de normalizacion',
+            'archivo_log': 'NO'
+
+        }
+
+        self.LOG.append_exec(informe)
         return data['unique_id']

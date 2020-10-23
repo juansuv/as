@@ -5,7 +5,7 @@ import os
 
 def validate_data(data, normalizacion, LOG, col):
     columns = normalizacion['columnas'].copy()
-    # print("columnas", columns)
+
     for column in columns:
         if column['tipo_columna'] == 3:
             valor = column['nombre_columna']
@@ -29,7 +29,7 @@ def validate_data(data, normalizacion, LOG, col):
 
         }
         LOG.append_clean(error)
-        print(error)
+
         # fun_database.subir_info_error(USUARIO_ODS_FINAN_ESCRITURA, error)
         data_validation = False
         raise Exception('Error archivo vacío')
@@ -71,7 +71,7 @@ def validate_data(data, normalizacion, LOG, col):
             data_validation = False
             raise Exception('Error archivo  de datos de entrada con campos nulos en la columna: ',columna)
 
-            # data[col].fillna(0, inplace=True)
+            #data[columna].fillna(0, inplace=True)
 
     if valor not in col:
         error = {
@@ -86,7 +86,7 @@ def validate_data(data, normalizacion, LOG, col):
             'archivo_log': 'NO'
         }
         LOG.append_clean(error)
-        print(error)
+
         # fun_database.subir_info_error(USUARIO_ODS_FINAN_ESCRITURA, error)
         data_validation = False
         raise Exception('Error archivo  de datos de entrada sin campo de valor')
@@ -104,7 +104,7 @@ def validate_data(data, normalizacion, LOG, col):
             'archivo_log': 'NO'
         }
         LOG.append_clean(error)
-        print(error)
+
         # fun_database.subir_info_error(USUARIO_ODS_FINAN_ESCRITURA, error)
         data_validation = False
         raise Exception('Error archivo  de datos de entrada sin campo de tiempo')

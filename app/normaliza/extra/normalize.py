@@ -7,7 +7,6 @@ class Normalize:
     columns = []
     data = {}
     df_data = pd.DataFrame()
-    df_data2 = pd.DataFrame()
     upper_limit = -1
     lower_limit = -1
     factor = 52 / 12
@@ -19,7 +18,6 @@ class Normalize:
         self.data = data
         self.df_data = dataframe
         self.columns = []
-        self.df_data2 = pd.DataFrame()
         self.upper_limit = -1
         self.lower_limit = -1
         self.factor = 52 / 12
@@ -61,6 +59,7 @@ class Normalize:
             else:
                 self.upper_limit = int(self.data['fecha_inicio'])
                 self.lower_limit = dates[pivot_index]
+        del dates
         return True
 
     def get_sliced_frame(self):

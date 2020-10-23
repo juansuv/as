@@ -26,15 +26,10 @@ class InteractiveLog:
         self.exec_header = False
 
         fs = FileSystemStorage(f'media/{user_id}/logs')
-        if not fs.exists('Log_alistamiento.csv'):
+        if not fs.exists('a'):
             alistamiento = ContentFile("Iniciando log de alistamiento")
-            fs.save('Log_alistamiento.csv', alistamiento)
-        if not fs.exists('Log_ejecucion.csv'):
-            ejecucion = ContentFile("Iniciando log de ejecucion")
-            fs.save('Log_ejecucion.csv', ejecucion)
-        if not fs.exists('error.log'):
-            error = ContentFile("Iniciando log de error")
-            fs.save('error.log', error)
+            fs.save('a', alistamiento)
+            fs.delete('a')
 
         fs = FileSystemStorage(f'media/{user_id}/input')
         if not fs.exists('a'):
@@ -49,8 +44,6 @@ class InteractiveLog:
             fs.delete('a')
 
 
-        open(self.clean_file, 'w').close()
-        open(self.exec_file, 'w').close()
 
     def append_clean(self, obj):
         self.write_row(self.clean_file, obj, 'clean_header')
